@@ -3,8 +3,12 @@ import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { router } from 'expo-router';
+import { useAppContext } from '@/context/AppContext';
+import { googleUser } from '@/mock/user';
 
-const LandingPage = ({ navigation }: { navigation: any }) => {
+const LandingPage = () => {
+  const {storeUser} = useAppContext()
+
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     clientId: '<YOUR_GOOGLE_CLIENT_ID>',
   });
@@ -12,7 +16,11 @@ const LandingPage = ({ navigation }: { navigation: any }) => {
   const handleGoogleSignIn = async () => {
     await promptAsync();
         //we can navigate to homescreen because we can't perform the operation on a simulator
-    router.push('/(tabs)')
+    
+    storeUser(googleUser)
+    return router.push('/(tabs)')
+
+    
     if (response?.type === 'success') {
       router.push('/(tabs)')
     }
@@ -21,7 +29,10 @@ const LandingPage = ({ navigation }: { navigation: any }) => {
   const handleAppleSignIn = async () => {
     const credential = await AppleAuthentication.signInAsync();
     //we can navigate to homescreen because we need a valid apple account to successfully signup
-    router.push('/(tabs)')
+
+    storeUser(googleUser)
+    return router.push('/(tabs)')
+    
     if (credential) {
       router.push('/(tabs)')
     }

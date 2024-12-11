@@ -1,53 +1,19 @@
+import { mockData } from '@/mock/treatments';
+import { AppContextProps, Treatment, Booking, UserProps } from '@/types';
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
-export interface Treatment {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  points: number;
-}
-
-
-export interface Booking {
-    id?: number
-    treatments?: Treatment[] | undefined
-    when?: string;
-    time?: string;
-    total?: number;
-  }
-
-interface AppContextProps {
-  treatments: Treatment[];
-  loyaltyPoints: number;
-  addPoints: (points: number) => void;
-  fetchTreatments: () => void;
-  addBooking: (details: Booking) => void;
-  resetBooking: () => void;
-  addBookingToHistory: (newBooking: Booking) => void;
-  booking: Booking | undefined;
-  bookingHistory: Booking[] | null;
-}
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<UserProps | undefined>(undefined);
   const [treatments, setTreatments] = useState<Treatment[]>([]);
   const [booking, setBooking] = useState<Booking | undefined>(undefined);
   const [loyaltyPoints, setLoyaltyPoints] = useState(0);
   const [bookingHistory, setBookingHistory] = useState<Booking[] | []>([]);
 
   const fetchTreatments = async () => {
-    // Mock API or hardcoded JSON
-    const mockData: Treatment[] = [
-      { id: '1', name: 'Consultation', description: 'initial consultation to assess your needs...', points: 1, price: 100 },
-      { id: '2', name: 'Botox - One Area', description: 'one of forehead lines/frown lines/crows feet/bunny lines/mar...', points: 1, price: 150 },
-      { id: '3', name: 'Botox - 2 Areas', description: 'one of forehead lines/frown lines/crows feet/bunny lines/mar...', points: 2, price: 200 },
-      { id: '4', name: 'Botox - 3 Areas', description: 'one of forehead lines/frown lines/crows feet/bunny lines/mar...', points: 2, price: 300 },
-      { id: '5', name: 'Botox For Jawline Slimming', description: 'for jawline slimming/teeth grinding...', points: 4, price: 400 },
-      { id: '6', name: 'Botox For Hyperhyidrosis', description: 'for excessive underarm sweating...', points: 5, price: 500 },
 
-    ];
     setTreatments(mockData);
   };
 
@@ -69,6 +35,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setBooking(undefined)
   }
 
+  const storeUser = (user: UserProps) => {
+    setUser(user)
+  }
+
   const addBookingToHistory = (newBooking: Booking) => {
 
     setBookingHistory((prevBooking) => 
@@ -77,7 +47,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   }
       
       return (
-    <AppContext.Provider value={{ treatments, loyaltyPoints, addPoints, fetchTreatments, addBooking, booking, bookingHistory, resetBooking, addBookingToHistory}}>
+    <AppContext.Provider value={{ treatments, loyaltyPoints, addPoints, fetchTreatments, addBooking, booking, bookingHistory, resetBooking, addBookingToHistory, user, storeUser}}>
       {children}
     </AppContext.Provider>
   );

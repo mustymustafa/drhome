@@ -1,7 +1,7 @@
 
-import React, { useMemo } from 'react';
-import { Modal, View, StyleSheet, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import { Treatment, useAppContext } from '@/context/AppContext';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { useAppContext } from '@/context/AppContext';
 import { ThemedText } from '@/components/ThemedText';
 import { router } from 'expo-router';
 import {
@@ -13,6 +13,7 @@ import {
 } from "@stripe/stripe-react-native";
 import { stripeIntent } from '@/api';
 import {scheduleNotification} from '@/utils/notification';
+import { Treatment } from '@/types';
 
 
 
@@ -20,12 +21,12 @@ const PaymentScreen: React.FC = ({
 
 
 }) => {
-  const { booking, addBooking, resetBooking,  addBookingToHistory, addPoints, loyaltyPoints } = useAppContext();
+  const { booking, user, addBooking, resetBooking,  addBookingToHistory, addPoints, loyaltyPoints } = useAppContext();
 
   const subtotal = booking?.treatments?.reduce((sum, treatment) => sum + treatment.price, 0)  || 0;
   const pointsEarned = booking?.treatments?.reduce((sum, treatment) => sum + treatment.points, 0) 
   const total = subtotal - loyaltyPoints; //assuming 1 point is £1
-  useMemo(() => {
+  useEffect(() => {
     addBooking({total: total})
   }, [total])
 
@@ -175,6 +176,16 @@ const PaymentScreen: React.FC = ({
             <Text style={styles.detailText}>{booking?.time || 'Not Selected'}</Text>
           </View>
 
+             {/* Patient Details Block */}
+             <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Patient Details</Text>
+            </View>
+            <View style={styles.divider} />
+            <Text style={styles.detailText}>{user?.name}</Text>
+            <Text style={styles.detailText}>{user?.email}</Text>
+          </View>
+
           {/* Payment Summary Block */}
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Payment Summary</Text>
@@ -201,7 +212,7 @@ const PaymentScreen: React.FC = ({
           </View>
 
 
-          <View style={{alignItems: 'center', top: '10%'}}>
+          <View style={{alignItems: 'center', top: '2%'}}>
           <TouchableOpacity onPress={() => {handlePayment()}} style={{ alignSelf: 'center', backgroundColor: 'black', width: '90%', borderRadius: 10, height: 40, justifyContent: 'center' }}>
                     <Text style={{ color: "white", textAlign: 'center' }}>Secure Checkout</Text>
                 </TouchableOpacity>

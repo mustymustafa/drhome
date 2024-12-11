@@ -10,7 +10,7 @@ import { router } from 'expo-router';
 
 
 const CalendarScreen: React.FC = () => {
-    const { addBooking } = useAppContext();
+    const { addBooking, booking } = useAppContext();
     const [selectedDate, setSelectedDate] = useState<string | null>(null);
     const [selectedTime, setSelectedTime] = useState<string | null>(null);
     const [showDateModal, setShowDateModal] = useState(false);
@@ -110,9 +110,9 @@ const CalendarScreen: React.FC = () => {
                 {!showDateModal &&
                     <>
                         <ThemedText type='subtitle' style={{ color: "black", textAlign: 'center', padding: 5 }}>Date</ThemedText>
-                        <ThemedText type='default' style={{ color: "black", textAlign: 'center', padding: 5 }}>{selectedDate}</ThemedText>
+                        <ThemedText type='default' style={{ color: "black", textAlign: 'center', padding: 5 }}>{selectedDate || booking?.when}</ThemedText>
                         <ThemedText type='subtitle' style={{ color: "black", textAlign: 'center', padding: 5 }}>Time </ThemedText>
-                        <ThemedText type='default' style={{ color: "black", textAlign: 'center', padding: 5 }}>{selectedTime}</ThemedText>
+                        <ThemedText type='default' style={{ color: "black", textAlign: 'center', padding: 5 }}>{selectedTime || booking?.time}</ThemedText>
                     </>
                 }
 

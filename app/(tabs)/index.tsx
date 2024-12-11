@@ -3,10 +3,11 @@ import Checkbox from 'expo-checkbox';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Treatment, useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/AppContext';
 import React, { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import { registerForPushNotificationsAsync } from '@/utils/notification';
+import { Treatment } from '@/types';
 
 
 
@@ -68,9 +69,9 @@ export default function HomeScreen() {
         
         <Checkbox
         style={styles.checkbox}
-            value={selectedItems.some(selectedItem => selectedItem.id === item.id)}
+            value={selectedItems.some(selectedItem => selectedItem.id === item.id) || booking?.treatments?.some(selectedItem => selectedItem.id === item.id)}
             onValueChange={() => handleSelection(item)} 
-            color={selectedItems.some(selectedItem => selectedItem.id === item.id) ? '#4630EB' : undefined}
+            color={selectedItems.some(selectedItem => selectedItem.id === item.id) || booking?.treatments?.some(selectedItem => selectedItem.id === item.id) ? '#4630EB' : undefined}
           />
          
           <View>
