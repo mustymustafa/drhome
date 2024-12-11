@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-nati
 import { useAppContext } from '@/context/AppContext';
 import { ThemedText } from '@/components/ThemedText';
 import { Calendar } from 'react-native-calendars';
-import { formatDateWithSuffix } from '@/utils';
+import { formatDateWithSuffix, formatTime } from '@/utils';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { router } from 'expo-router';
 
@@ -49,7 +49,8 @@ const CalendarScreen: React.FC = () => {
 
     const handleConfirm = (date) => {
         const dateTime = new Date(date);
-        setSelectedTime(`${dateTime.getHours()}:${dateTime.getMinutes()}`);
+        const formattedTime = formatTime(dateTime.getHours(), dateTime.getMinutes())
+        setSelectedTime(formattedTime);
         hideDatePicker();
     };
 

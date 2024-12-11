@@ -15,4 +15,12 @@ export function formatDateWithSuffix(date: Date): string {
     if (day % 10 === 3 && day !== 13) return 'rd';
     return 'th';
   }
+
+
+  export function formatTime(hour: number, min: number): string {
+    const formatMin = min < 10 ? `0${min}` : `${min}`
+
+    return `${hour}:${formatMin}`
+
+  }
   
