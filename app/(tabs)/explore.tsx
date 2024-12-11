@@ -6,8 +6,11 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { useAppContext } from '@/context/AppContext';
 
-export default function TabTwoScreen() {
+export default function ExploreScreen() {
+
+  const { booking, loyaltyPoints } = useAppContext();
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -20,7 +23,8 @@ export default function TabTwoScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
+        <ThemedText style={{textAlign:'center'}} type="title">Loyalty Points</ThemedText>
+        <ThemedText style={{textAlign:'center'}} type="default">Loyalty Points</ThemedText>
       </ThemedView>
       <ThemedText>This app includes example code to help you get started.</ThemedText>
       <Collapsible title="File-based routing">
@@ -103,7 +107,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+alignItems: 'center'
   },
 });

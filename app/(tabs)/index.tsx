@@ -1,11 +1,48 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
+import { Image, StyleSheet, FlatList, TouchableOpacity, View } from 'react-native';
+import Checkbox from 'expo-checkbox';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { Treatment, useAppContext } from '@/context/AppContext';
+import React, { useEffect, useState } from 'react';
+import { router } from 'expo-router';
+
+
 
 export default function HomeScreen() {
+  const { treatments, booking, fetchTreatments, addBooking } = useAppContext();
+  const [selectedItems, setSelectedItems] = useState<Treatment[]>([]);
+
+  const now = new Date().getTime()
+
+
+  useEffect(() => {
+    fetchTreatments();
+  }, []);
+
+
+
+  const handleSelection = (item: Treatment) => {
+    if (selectedItems.some(selectedItem => selectedItem.id === item.id)) {
+      // If the item is already selected, remove it
+      setSelectedItems(selectedItems.filter(selectedItem => selectedItem.id !== item.id));
+    } else {
+      // If the item is not selected, add it
+      setSelectedItems([...selectedItems, item]);
+    }
+  }
+
+  const onTreatmentSelected = () => {
+
+    addBooking({id: now, treatments: selectedItems })
+    router.push('/(home)/calendar')
+
+  }
+
+
+
+
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -16,40 +53,41 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
+        <ThemedText type="subtitle">Select a treatment</ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
+      <FlatList
+      data={treatments}
+    keyExtractor={(item) => item.id}
+    renderItem={({ item }) => (
+      <TouchableOpacity
+      onPress={() => handleSelection(item)} 
+        style={styles.card}
+      >
+        
+        <Checkbox
+        style={styles.checkbox}
+            value={selectedItems.some(selectedItem => selectedItem.id === item.id)}
+            onValueChange={() => handleSelection(item)} 
+            color={selectedItems.some(selectedItem => selectedItem.id === item.id) ? '#4630EB' : undefined}
+          />
+         
+          <View>
+            <ThemedText style={styles.title}>{item.name}</ThemedText>
+            <ThemedText>£{item.price}</ThemedText>
+            <ThemedText style={{ fontSize: 12, top: 5 }}>{item.description}</ThemedText>
+          </View>
+   
+      </TouchableOpacity>
+    )}
+  />
+
+
+
+
+          <TouchableOpacity onPress={onTreatmentSelected} style={styles.stickyButton}>
+                    <ThemedText style={{ color: "white", textAlign: 'center' }}>Continue</ThemedText>
+                </TouchableOpacity>
+
     </ParallaxScrollView>
   );
 }
@@ -71,4 +109,23 @@ const styles = StyleSheet.create({
     left: 0,
     position: 'absolute',
   },
+  card: { padding: 20, margin: 5, borderWidth: 0.4, borderRadius: 8 },
+  title: { fontWeight: 'bold', fontSize: 18 },
+  stickyButton: {
+    position: 'sticky',
+    bottom: 10, 
+
+    backgroundColor: 'black',
+    paddingVertical: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+
+  checkbox: {
+    margin: 2,
+    borderRadius: 50,
+    bottom: 5
+    
+  },
+
 });
