@@ -6,6 +6,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { Treatment, useAppContext } from '@/context/AppContext';
 import React, { useEffect, useState } from 'react';
 import { router } from 'expo-router';
+import { registerForPushNotificationsAsync } from '@/utils/notification';
 
 
 
@@ -17,6 +18,7 @@ export default function HomeScreen() {
 
 
   useEffect(() => {
+    registerForPushNotificationsAsync();
     fetchTreatments();
   }, []);
 

@@ -14,6 +14,7 @@ export interface Booking {
     treatments?: Treatment[] | undefined
     when?: string;
     time?: string;
+    total?: number;
   }
 
 interface AppContextProps {
@@ -23,15 +24,18 @@ interface AppContextProps {
   fetchTreatments: () => void;
   addBooking: (details: Booking) => void;
   resetBooking: () => void;
-  booking: Booking | null;
+  addBookingToHistory: (newBooking: Booking) => void;
+  booking: Booking | undefined;
+  bookingHistory: Booking[] | null;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [treatments, setTreatments] = useState<Treatment[]>([]);
-  const [booking, setBooking] = useState<Booking | null>();
+  const [booking, setBooking] = useState<Booking | undefined>(undefined);
   const [loyaltyPoints, setLoyaltyPoints] = useState(0);
+  const [bookingHistory, setBookingHistory] = useState<Booking[] | []>([]);
 
   const fetchTreatments = async () => {
     // Mock API or hardcoded JSON
@@ -57,15 +61,23 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       ...prevBooking,
       ...details
     }));
+
+
   };
 
   const resetBooking = () => {
-    setBooking(null)
+    setBooking(undefined)
   }
 
+  const addBookingToHistory = (newBooking: Booking) => {
 
-  return (
-    <AppContext.Provider value={{ treatments, loyaltyPoints, addPoints, fetchTreatments, addBooking, booking, resetBooking}}>
+    setBookingHistory((prevBooking) => 
+      [...prevBooking, newBooking] )
+
+  }
+      
+      return (
+    <AppContext.Provider value={{ treatments, loyaltyPoints, addPoints, fetchTreatments, addBooking, booking, bookingHistory, resetBooking, addBookingToHistory}}>
       {children}
     </AppContext.Provider>
   );

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Modal, View, StyleSheet, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Treatment, useAppContext } from '@/context/AppContext';
 import { ThemedText } from '@/components/ThemedText';
@@ -12,6 +12,7 @@ import {
  
 } from "@stripe/stripe-react-native";
 import { stripeIntent } from '@/api';
+import {scheduleNotification} from '@/utils/notification';
 
 
 
@@ -19,11 +20,14 @@ const PaymentScreen: React.FC = ({
 
 
 }) => {
-  const { booking, addPoints, loyaltyPoints } = useAppContext();
+  const { booking, addBooking, resetBooking,  addBookingToHistory, addPoints, loyaltyPoints } = useAppContext();
 
   const subtotal = booking?.treatments?.reduce((sum, treatment) => sum + treatment.price, 0)  || 0;
   const pointsEarned = booking?.treatments?.reduce((sum, treatment) => sum + treatment.points, 0) 
   const total = subtotal - loyaltyPoints; //assuming 1 point is £1
+  useMemo(() => {
+    addBooking({total: total})
+  }, [total])
 
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
@@ -45,6 +49,7 @@ const PaymentScreen: React.FC = ({
     const { error } = await presentPaymentSheet(); 
 
     if(!error) {
+      
       handleConfirmPayment()
 
     } else {
@@ -99,6 +104,7 @@ const PaymentScreen: React.FC = ({
       //console.log('pay error', error)
       alert('Ops something went wrong: Apple Pay error')
     } else {
+    
     handleConfirmPayment()
     }
 
@@ -108,16 +114,14 @@ const PaymentScreen: React.FC = ({
 
   const handleConfirmPayment = () => {
     addPoints(pointsEarned ?? 0)
+    addBookingToHistory(booking)
+    resetBooking()
+
     Alert.alert('Booking confirmed!', `You have earned ${pointsEarned} Loyalty Point(s)! 🎉`, [{'text': 'yay!', onPress: () => {router.push('/(tabs)/explore')}}]);
 
 
-      Notifications.scheduleNotificationAsync({
-        content: {
-          title: 'Loyalty Point Earned 🎉',
-          body: 'You earned 1 loyalty point!',
-        },
-        trigger: null,
-      });
+      
+   scheduleNotification()
 
     
   };
