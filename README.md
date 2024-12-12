@@ -71,6 +71,7 @@ payment card test details
  using expo EAS
  1. login to the expo go app
  2. scroll down to the dr home project and open it
+ 3. p.s put your phone in light mode..i didn't handle dark mode theme in the project
 
 
 https://github.com/user-attachments/assets/6978ccca-6714-40f8-a57d-8695f435c3e0
