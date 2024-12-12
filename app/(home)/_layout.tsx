@@ -10,7 +10,10 @@ export default function HomeLayout() {
         <Stack.Screen
         name="calendar"
         options={{
-          title: 'Calendar'
+          title: 'Calendar',
+          headerShown: true,
+         headerBackButtonDisplayMode: 'generic',
+         headerBackVisible: true
         }}
       />
       <Stack.Screen

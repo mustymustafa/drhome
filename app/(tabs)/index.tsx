@@ -1,134 +1,128 @@
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, FlatList, TouchableOpacity, View } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useAppContext } from '@/context/AppContext';
-import React, { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import { registerForPushNotificationsAsync } from '@/utils/notification';
 import { Treatment } from '@/types';
 
-
-
-export default function HomeScreen() {
+const HomeScreen = () => {
   const { treatments, booking, fetchTreatments, addBooking } = useAppContext();
   const [selectedItems, setSelectedItems] = useState<Treatment[]>([]);
-
-  const now = new Date().getTime()
-
+  const now = new Date().getTime();
 
   useEffect(() => {
     registerForPushNotificationsAsync();
     fetchTreatments();
   }, []);
 
-
-
   const handleSelection = (item: Treatment) => {
-    if (selectedItems.some(selectedItem => selectedItem.id === item.id)) {
-      // If the item is already selected, remove it
-      setSelectedItems(selectedItems.filter(selectedItem => selectedItem.id !== item.id));
-    } else {
-      // If the item is not selected, add it
-      setSelectedItems([...selectedItems, item]);
-    }
-  }
+    setSelectedItems((prevItems) => {
+      return prevItems.some((selectedItem) => selectedItem.id === item.id)
+        ? prevItems.filter((selectedItem) => selectedItem.id !== item.id)
+        : [...prevItems, item];
+    });
+  };
 
   const onTreatmentSelected = () => {
+    if(selectedItems.length < 1) return alert('please select a treatment')
+    addBooking({ id: now, treatments: selectedItems });
+    router.push('/(home)/calendar');
+  };
 
-    addBooking({id: now, treatments: selectedItems })
-    router.push('/(home)/calendar')
+  const renderTreatmentItem = ({ item }: { item: Treatment }) => {
+    const isSelected =
+      selectedItems.some((selectedItem) => selectedItem.id === item.id) 
 
-  }
-
-
-
-
+    return (
+      <TouchableOpacity onPress={() => handleSelection(item)} style={styles.card}>
+        <Checkbox
+          style={styles.checkbox}
+          value={isSelected}
+          onValueChange={() => handleSelection(item)}
+          color={isSelected ? '#4630EB' : undefined}
+        />
+        <View style={{padding: 5}}>
+          <ThemedText style={styles.title}>{item.name}</ThemedText>
+          <ThemedText>£{item.price}</ThemedText>
+          <ThemedText style={styles.description}>{item.description}</ThemedText>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
+    <ThemedView style={styles.container}>
+      <ThemedView style={{top: '15%', padding: 20}}>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="subtitle">Select a treatment</ThemedText>
       </ThemedView>
+  
+      </ThemedView>
+
       <FlatList
-      data={treatments}
-    keyExtractor={(item) => item.id}
-    renderItem={({ item }) => (
-      <TouchableOpacity
-      onPress={() => handleSelection(item)} 
-        style={styles.card}
-      >
-        
-        <Checkbox
-        style={styles.checkbox}
-            value={selectedItems.some(selectedItem => selectedItem.id === item.id) || booking?.treatments?.some(selectedItem => selectedItem.id === item.id)}
-            onValueChange={() => handleSelection(item)} 
-            color={selectedItems.some(selectedItem => selectedItem.id === item.id) || booking?.treatments?.some(selectedItem => selectedItem.id === item.id) ? '#4630EB' : undefined}
-          />
-         
-          <View>
-            <ThemedText style={styles.title}>{item.name}</ThemedText>
-            <ThemedText>£{item.price}</ThemedText>
-            <ThemedText style={{ fontSize: 12, top: 5 }}>{item.description}</ThemedText>
-          </View>
-   
+style={styles.treatmentList}
+        data={treatments}
+        keyExtractor={(item) => item.id}
+        renderItem={renderTreatmentItem}
+        ListFooterComponent={<View style={styles.listFooter}/>}
+      />
+
+      <TouchableOpacity onPress={onTreatmentSelected} style={styles.stickyButton}>
+        <ThemedText style={styles.buttonText}>Continue</ThemedText>
       </TouchableOpacity>
-    )}
-  />
-
-
-
-
-          <TouchableOpacity onPress={onTreatmentSelected} style={styles.stickyButton}>
-                    <ThemedText style={{ color: "white", textAlign: 'center' }}>Continue</ThemedText>
-                </TouchableOpacity>
-
-    </ParallaxScrollView>
+    </ThemedView>
   );
-}
+};
 
 const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: 'white'},
   titleContainer: {
+bottom: 20,
+   padding: 10
+  },
+  treatmentList: {flex: 1, top: '12%', alignSelf: 'center'},
+ 
+  card: {
+    padding: 20,
+    margin: 5,
+    borderWidth: 0.4,
+    borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  title: {
+    fontWeight: 'bold',
+    fontSize: 18,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  description: {
+    fontSize: 12,
+    marginTop: 5,
   },
-  card: { padding: 20, margin: 5, borderWidth: 0.4, borderRadius: 8 },
-  title: { fontWeight: 'bold', fontSize: 18 },
   stickyButton: {
-    position: 'sticky',
-    bottom: 10, 
-
+    top: '85%',
+    position: 'absolute',
+    bottom: 0,
+    alignSelf: 'center',
     backgroundColor: 'black',
     paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 10,
-    alignItems: 'center',
+    width: '90%',
+    height: 40
   },
-
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+  },
   checkbox: {
     margin: 2,
     borderRadius: 50,
-    bottom: 5
-    
   },
-
+  listFooter: {height: 300, top: 100}
 });
+
+export default HomeScreen;

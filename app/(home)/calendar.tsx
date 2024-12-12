@@ -106,7 +106,7 @@ const CalendarScreen: React.FC = () => {
             </View>
 
 
-            <View style={{ top: '12%', }}>
+            <View style={{ top: '10%', }}>
 
                 {!showDateModal &&
                     <>
@@ -118,7 +118,7 @@ const CalendarScreen: React.FC = () => {
                 }
 
 
-                {selectedDate && selectedTime && <TouchableOpacity onPress={goToPayment} style={{ top: '30%', alignSelf: 'center', backgroundColor: 'black', width: '90%', borderRadius: 10, height: 40, justifyContent: 'center' }}>
+                {selectedDate && selectedTime && <TouchableOpacity onPress={goToPayment} style={{ top: '10%', alignSelf: 'center', backgroundColor: 'black', width: '90%', borderRadius: 10, height: 40, justifyContent: 'center' }}>
                     <Text style={{ color: "white", textAlign: 'center' }}>Continue to Payment</Text>
                 </TouchableOpacity>}
             </View>

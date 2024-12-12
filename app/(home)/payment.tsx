@@ -60,7 +60,7 @@ const PaymentScreen: React.FC = ({
   }
 
   const handlePayment = async (platformPay?: boolean) => {
-    const resp = await stripeIntent(total.toString(), 'GBP')
+    const resp = await stripeIntent((total * 100).toString(), 'GBP')
     
     await initializePaymentSheet(resp).then(() => 
       {
@@ -118,10 +118,7 @@ const PaymentScreen: React.FC = ({
     addBookingToHistory(booking)
     resetBooking()
 
-    Alert.alert('Booking confirmed!', `You have earned ${pointsEarned} Loyalty Point(s)! 🎉`, [{'text': 'yay!', onPress: () => {router.push('/(tabs)/explore')}}]);
-
-
-      
+    Alert.alert('Booking confirmed!', `You have earned ${pointsEarned} Loyalty Point(s)! 🎉`, [{'text': 'yay!', onPress: () => {router.push('/(tabs)/loyalty')}}]);
    scheduleNotification()
 
     
@@ -138,10 +135,10 @@ const PaymentScreen: React.FC = ({
 
   return (
 
-      <ScrollView contentContainerStyle={styles.modalContainer}>
-
+      <ScrollView style={styles.modalContainer}>
+        <ThemedText style={styles.pageTitle} type='subtitle'>Dr Home Aesthetics Checkout</ThemedText>
         <View style={styles.modalContent}>
-        <ThemedText style={{padding: 10, bottom: '10%', textAlign: 'center'}} type='subtitle'>Dr Home Aesthetics Checkout</ThemedText>
+
           {/* Treatments Block */}
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
@@ -237,6 +234,8 @@ const PaymentScreen: React.FC = ({
       
         </View>
 
+        <View style={styles.footerComponent} />
+
       </ScrollView>
 
   );
@@ -249,14 +248,15 @@ const styles = StyleSheet.create({
 
 
   },
+  pageTitle: {padding: 10, top: '10%', textAlign: 'center'},
   modalContent: {
-  top: '15%',
-   width: '100%',
-    padding: 16,
+  top: '10%',
+
+    padding: 20,
 
   },
   section: {
-    marginBottom: 16,
+    //marginBottom: 16,
     padding: 10
   },
   sectionHeader: {
@@ -296,6 +296,11 @@ const styles = StyleSheet.create({
   boldText: {
     fontWeight: 'bold',
   },
+
+  footerComponent: {
+    height: 300, 
+    top: 100
+  }
 
 });
 
