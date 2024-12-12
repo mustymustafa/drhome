@@ -2,6 +2,8 @@ import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
 export async function registerForPushNotificationsAsync() {
+
+  await Notifications.requestPermissionsAsync()
     Notifications.setNotificationHandler({
         handleNotification: async () => ({
           shouldShowAlert: true,

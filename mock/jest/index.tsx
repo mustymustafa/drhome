@@ -29,4 +29,5 @@ export const mockContext = {
     booking: { treatments: [] },
     fetchTreatments: jest.fn(),
     addBooking: jest.fn(),
+    addPoints: jest.fn()
   };
