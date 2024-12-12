@@ -38,8 +38,8 @@ const CalendarScreen: React.FC = () => {
                 <ThemedText style={styles.title}>When are you free?</ThemedText>
 
                 <Calendar
-                minDate={new Date()}
-                    current={new Date()}
+                minDate={new Date().toISOString().split('T')[0]}
+                    current={new Date().toISOString().split('T')[0]}
                     scrollEnabled
                     showScrollIndicator
                     markedDates={{
@@ -66,7 +66,7 @@ const CalendarScreen: React.FC = () => {
 
             {selectedDate && selectedTime && (
                 <View style={styles.buttonContainer}>
-                    <ThemedButton text="Continue to Payment" onPress={goToPayment} spacing={10} />
+                    <ThemedButton text="Continue to Payment" onPress={goToPayment} spacing={1} />
                 </View>
             )}
         </View>
