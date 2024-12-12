@@ -9,6 +9,7 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { AppProvider } from '@/context/AppContext';
 import { StripeProvider } from '@stripe/stripe-react-native';
+import setupGlobalErrorHandler from '@/utils/errorhandler';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -19,7 +20,11 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
+  
   useEffect(() => {
+
+    setupGlobalErrorHandler();
+
     if (loaded) {
       SplashScreen.hideAsync();
     }

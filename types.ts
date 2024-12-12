@@ -40,3 +40,7 @@ export interface Treatment {
     timeSlots: string[],
     selectedTime: string
   }
+
+  export interface StripeIntentResponse {
+    client_secret: string;
+  }

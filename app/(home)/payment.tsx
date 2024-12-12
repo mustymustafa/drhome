@@ -116,7 +116,7 @@ const PaymentScreen: React.FC = () => {
       <ThemedView style={styles.modalContent}>
         {renderSection('Treatments', () => navigateTo('/(tabs)'), booking?.treatments?.map((treatment: Treatment) => (
           <ThemedView key={treatment.id}>
-            <Text style={styles.detailText}>{treatment.name}</Text>
+            <Text style={{...styles.detailText, fontWeight: 'bold'}}>{treatment.name}</Text>
             <Text style={styles.priceText}>£{treatment.price.toFixed(2)}</Text>
           </ThemedView>
         )))}

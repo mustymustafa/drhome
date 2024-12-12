@@ -1,34 +1,35 @@
+import axios from "axios";
 import { BaseURL, EndPoints } from "./endpoints";
+import { StripeIntentResponse } from "@/types";
+
 
 
 export const stripeIntent = async (
-    amount: string,
-    currency: string,
-  ): Promise<string | any> => {
-    try {
-      // prepare url
-      const url = `${BaseURL}${EndPoints.stripeIntent}`;
-    
-      //using a simple fetch method from  react native. we can build a hook using axios to handle POST and GET requests for when we have multiple endpoints
-      const resp = await fetch(`${url}`, {
-        method: "POST",
-        body: JSON.stringify({
-          amount,
-          currency,
-        }),
-        headers: new Headers({
+  amount: string,
+  currency: string
+): Promise<StripeIntentResponse | null> => {
+  try {
+    const url = `${BaseURL}${EndPoints.stripeIntent}`;
+    const { data, status } = await axios.post<StripeIntentResponse>(
+      url,
+      { amount, currency },
+      {
+        headers: {
           "Content-Type": "application/json",
-        }),
-      });
+        },
+      }
+    );
 
-      const value = await resp.json();
-      if (resp.ok) {
-          return value;
-        } else {
-          console.log("[ERROR]:", value.error);
-          return alert("Ops something went wrong");
-        }
-    } catch (error) {
-        console.log("[ERROR]:", error);
+    if (status === 200) {
+      return data;
+    } else {
+      console.error(`[ERROR]: Unexpected status code: ${status}`);
+      alert("Oops! Something went wrong");
+      return null;
     }
-  };
+  } catch (error) {
+    console.error("[ERROR]:", error);
+    alert("Oops! Something went wrong");
+    return null;
+  }
+};
