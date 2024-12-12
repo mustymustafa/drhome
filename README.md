@@ -39,6 +39,18 @@ for any questions you can contact me on: mustafaumar70@live.com
     yarn test
    ```
 
+     ## Payment
+i used stripe SDK to integrate the payment options
+Apple pay on IOS and Google pay on android
+
+payment card test details
+1. card number: 4242 4242 4242 4242
+2. MM/YY: 02/26
+3. cvv: 123
+
+
+![IMG_1730](https://github.com/user-attachments/assets/6534e262-56f5-454a-947a-e05d365a9155)
+![IMG_1731](https://github.com/user-attachments/assets/92f9bcf4-d0c4-4873-9005-8f6588e1cd48)
 
 
 ## Running on real device
@@ -48,6 +60,8 @@ for any questions you can contact me on: mustafaumar70@live.com
 3. connect your device to the same wifi as your laptop or use a usb cable
 4. run the app from you laptop and you will see it appear on your expo go app
 5. tip: make sure your device is in light mode. Dark mode wasn't implemented in the prpject
+
+
 
 
 ## CI/CD
@@ -74,12 +88,6 @@ I included a sample expo eas config file. EAS is useful for OTA updates (This al
 
 I also included a global error handler. This helps to handle crashes safely and also sending the error to an error monitoring tool like sentry or even slack. This can help when the app goes to production to be notified whenver the app crashes
 
-## Payment
-i used stripe SDK to integrate the payment options
-Apple pay on IOS and Google pay on android
 
-
-![IMG_1730](https://github.com/user-attachments/assets/6534e262-56f5-454a-947a-e05d365a9155)
-![IMG_1731](https://github.com/user-attachments/assets/92f9bcf4-d0c4-4873-9005-8f6588e1cd48)
 
 
