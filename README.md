@@ -20,7 +20,7 @@ for any questions you can contact me on: mustafaumar70@live.com
       5. jest for unit test
          
 
-1. Clone repository and Install dependencies
+1. Install dependencies
 
    ```bash
    yarn
@@ -31,10 +31,14 @@ for any questions you can contact me on: mustafaumar70@live.com
    ```bash
     yarn start
    ```
-3.  ```bash Select s to switch to expo go```
-4. ```bashselect i for ios or a for android ```
+3.  ```bash
+    Select s to switch to expo go
+    ```
+    ```bash
+    select i for ios or a for android
+    ```
 
-5. Run unit test
+   4.  Run unit test
      ```bash
     yarn test
    ```
