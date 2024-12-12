@@ -1,148 +1,101 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { useAppContext } from '@/context/AppContext';
 import { ThemedText } from '@/components/atomic/atoms/ThemedText';
 import { Calendar } from 'react-native-calendars';
-import { formatDateWithSuffix, formatTime } from '@/utils';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { formatDateWithSuffix, generateTimeSlots } from '@/utils';
 import { router } from 'expo-router';
 import ThemedButton from '@/components/atomic/molecules/ThemedButton';
-
-
+import TimePicker from '@/components/atomic/organism/TimePicker';
 
 const CalendarScreen: React.FC = () => {
-    const { addBooking, booking } = useAppContext();
+    const { addBooking } = useAppContext();
     const [selectedDate, setSelectedDate] = useState<string | null>(null);
     const [selectedTime, setSelectedTime] = useState<string | null>(null);
-    const [showDateModal, setShowDateModal] = useState(false);
     const [markedDate, setMarkedDate] = useState<string | null>(null);
 
+    //memoizing timeslots to prevent unnecessary re-renders
+    const timeSlots = useMemo(() => generateTimeSlots(), [selectedDate]);
 
+    const handleTimeSelect = (time: string) => setSelectedTime(time);
 
     const goToPayment = () => {
-        //enforcing the values because you can't call goToPayment until selectedDate and selectedTime are not null
-        addBooking({ when: selectedDate!, time: selectedTime! })
-        router.push('/(home)/payment')
-    }
-    const hideDatePicker = () => {
-        setShowDateModal(false);
+        if (selectedDate && selectedTime) {
+            addBooking({ when: selectedDate, time: selectedTime });
+            router.push('/(home)/payment');
+        }
     };
 
-    const showDatePicker = () => {
-        setShowDateModal(true);
+    const onDayPress = (day: { dateString: string }) => {
+        const selectedDay = new Date(day.dateString);
+        setSelectedDate(formatDateWithSuffix(selectedDay));
+        setMarkedDate(day.dateString);
     };
-
-
-
-
-    const onDayPress = (day) => {
-
-        const selectedDay = new Date(day["dateString"]);
-
-
-        const formattedDate = formatDateWithSuffix(selectedDay)
-
-        setSelectedDate(formattedDate)
-        setMarkedDate(day["dateString"])
-        showDatePicker()
-
-    }
-
-    const handleConfirm = (date) => {
-        const dateTime = new Date(date);
-        const formattedTime = formatTime(dateTime.getHours(), dateTime.getMinutes())
-        setSelectedTime(formattedTime);
-        hideDatePicker();
-    };
-
 
     return (
-
-        <View style={styles.modal}>
-
-
-
+        <View style={styles.container}>
             <View style={styles.content}>
-                <ThemedText style={styles.modalTitle}>When are you free?</ThemedText>
-
-
-
+                <ThemedText style={styles.title}>When are you free?</ThemedText>
 
                 <Calendar
-
-
+                minDate={new Date()}
                     current={new Date()}
-
-                    scrollEnabled={true}
-                    showScrollIndicator={true}
+                    scrollEnabled
+                    showScrollIndicator
                     markedDates={{
-
-                        //we can add any pre-selected date we want from the backedn 
-                        [new Date().toDateString()]: {
+                        [new Date().toISOString().split('T')[0]]: {
                             selected: true,
                             marked: true,
-                            selectedColor: '#8F8F8F'
+                            selectedColor: '#8F8F8F',
                         },
-
-                        [markedDate]: {
-                            selected: true,
-                            marked: true,
-                            selectedColor: 'black'
-                        },
-
+                        ...(markedDate && {
+                            [markedDate]: {
+                                selected: true,
+                                marked: true,
+                                selectedColor: 'black',
+                            },
+                        }),
                     }}
-                    onDayPress={(date: string) => {
-                        onDayPress(date)
-                    }}
+                    onDayPress={onDayPress}
                 />
 
+                <ThemedText type="subtitle" style={styles.subtitle}>Select a Time</ThemedText>
 
-                <DateTimePickerModal
-
-                    isVisible={showDateModal}
-                    mode="time"
-                    onConfirm={handleConfirm}
-                    onCancel={hideDatePicker}
-                />
+               {selectedDate && <TimePicker timeSlots={timeSlots} selectedTime={selectedTime} onSelect={handleTimeSelect} /> }
             </View>
 
-
-            <View style={{ top: '10%', }}>
-
-                {!showDateModal &&
-                    <>
-                        <ThemedText type='subtitle' style={{ color: "black", textAlign: 'center', padding: 5 }}>Date</ThemedText>
-                        <ThemedText type='default' style={{ color: "black", textAlign: 'center', padding: 5 }}>{selectedDate || booking?.when}</ThemedText>
-                        <ThemedText type='subtitle' style={{ color: "black", textAlign: 'center', padding: 5 }}>Time </ThemedText>
-                        <ThemedText type='default' style={{ color: "black", textAlign: 'center', padding: 5 }}>{selectedTime || booking?.time}</ThemedText>
-                    </>
-                }
-
-
-                {selectedDate && selectedTime && <ThemedButton text='Continue to Payment' onPress={goToPayment} spacing={10} />}
-            </View>
+            {selectedDate && selectedTime && (
+                <View style={styles.buttonContainer}>
+                    <ThemedButton text="Continue to Payment" onPress={goToPayment} spacing={10} />
+                </View>
+            )}
         </View>
+    );
+};
 
-    )
-
-}
-
-
-export default CalendarScreen
-
+export default CalendarScreen;
 
 const styles = StyleSheet.create({
-    modal: {
-       flex: 1,
-       backgroundColor: 'white'
-  
-
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
     },
     content: {
         padding: 10,
-        top: '10%'
+        marginTop: '5%',
     },
-
-    modalTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
-
-})
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    subtitle: {
+        color: 'black',
+        textAlign: 'center',
+        padding: 20,
+    },
+    buttonContainer: {
+        marginTop: '10%',
+    },
+});

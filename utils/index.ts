@@ -23,4 +23,26 @@ export function formatDateWithSuffix(date: Date): string {
     return `${hour}:${formatMin}`
 
   }
+
+   // Generate times from 9:00 AM to 9:00 PM with 30-minute intervals 
+   export const generateTimeSlots = () => {
+    const times = [];
+    let currentHour = 9;
+    let currentMinute = 0;
+
+    while (currentHour < 21 || (currentHour === 21 && currentMinute === 0)) {
+      const time = `${currentHour}:${currentMinute === 0 ? "00" : currentMinute} ${
+        currentHour < 12 ? "AM" : "PM"
+      }`;
+      times.push(time);
+
+      currentMinute += 30;
+      if (currentMinute === 60) {
+        currentMinute = 0;
+        currentHour++;
+      }
+    }
+
+    return times;
+  };
   

@@ -1,7 +1,7 @@
-import { render, fireEvent } from '@testing-library/react-native';
+import { render } from '@testing-library/react-native';
 import { AppContext } from '@/context/AppContext';
 import HomeScreen from '..';
-import { mockContext, mockTreatments } from '@/mock/jest';
+import { mockContext } from '@/mock/jest';
 describe('HomeScreen', () => {
       
   it('renders the treatment list', () => {

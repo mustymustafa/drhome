@@ -34,3 +34,9 @@ export interface Treatment {
     email: string;
     name: string;
   }
+
+  export interface TimePickerProps {
+    onSelect: (time: string) => void;
+    timeSlots: string[],
+    selectedTime: string
+  }
