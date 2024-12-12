@@ -4,7 +4,7 @@
 ## Get started
 
 ## Walktrhough Video
-https://uploadthing.com/dashboard/mytradepal/5usdiermiz/files
+https://utfs.io/f/3LgkUbTOXVomGVS8wLUPlZq5dKUeWArSHiOX3j4JBw0fcVk8
 
 ## Contact
 for any questions you can contact me on: mustafaumar70@live.com
