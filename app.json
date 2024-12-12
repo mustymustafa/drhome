@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.musty.drhome"
     },
     "android": {
       "adaptiveIcon": {
@@ -46,6 +47,12 @@
         "projectId": "5a14e15d-e833-4a1e-9bb3-751431e73f9a"
       }
     },
-    "owner": "musty"
+    "owner": "musty",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/5a14e15d-e833-4a1e-9bb3-751431e73f9a"
+    }
   }
 }

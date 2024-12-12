@@ -75,7 +75,7 @@ const PaymentScreen: React.FC = () => {
       },
     });
     if (error) {
-      Alert.alert('Payment Error', 'Ops something went wrong: Apple Pay error');
+      Alert.alert('Payment Error', 'Ops something went wrong: Platform Pay error');
     } else {
       handleConfirmPayment();
     }

@@ -1,3 +1,4 @@
+import { scale } from "@/utils/sizes";
 import { StyleSheet, TouchableOpacity, Text, ActivityIndicator } from "react-native";
 
 interface ThemedButtonProps {
@@ -13,7 +14,7 @@ const ThemedButton = ({text, onPress, spacing, sticky, loading}:ThemedButtonProp
 
    const stickyButton = sticky ? 'stickyButton' : 'button'
     return (
-<TouchableOpacity onPress={onPress} style={[styles.button, styles[stickyButton],  {top: `${spacing ?? 0}%`}]}>
+<TouchableOpacity onPress={onPress} style={[styles.button, styles[stickyButton],  {top: scale(spacing * 10)}]}>
                     
                     {loading ? <ActivityIndicator size="small" /> :  <Text style={styles.text}>{text}</Text>}
                    

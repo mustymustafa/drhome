@@ -8,6 +8,7 @@ import { router } from 'expo-router';
 import { registerForPushNotificationsAsync } from '@/utils/notification';
 import { Treatment } from '@/types';
 import ThemedButton from '@/components/atomic/molecules/ThemedButton';
+import { scale } from '@/utils/sizes';
 
 const HomeScreen = () => {
   const { treatments, booking, fetchTreatments, removeTreatment, addBooking } = useAppContext();
@@ -76,7 +77,7 @@ style={styles.treatmentList}
         ListFooterComponent={<View style={styles.listFooter}/>}
       />
 
-      <ThemedButton spacing={83} text='Continue' onPress={onTreatmentSelected} sticky   />
+      <ThemedButton spacing={57} text='Continue' onPress={onTreatmentSelected} sticky   />
 
 
     </ThemedView>
