@@ -50,24 +50,33 @@ for any questions you can contact me on: mustafaumar70@live.com
 
 ## CI/CD
 ![Screenshot 2024-12-12 at 15 39 23](https://github.com/user-attachments/assets/459e0311-9369-4cd7-8abd-ddba47757df3)
+
+
 i setup a boilerplate yaml file which can be used to automate build process and app store submission
 
 ## Design system
    ![Screenshot 2024-12-12 at 15 42 05](https://github.com/user-attachments/assets/1e6268bb-1930-4b49-8f9b-0d975e7796d5)
+   
+   
    i made use of atomic design system. It follows the structure of an atom. Creating Themed components allows us to reuse components while maintaning the same look and feeel across the app
 
 ## EXPO EAS update
 ![Screenshot 2024-12-12 at 15 39 57](https://github.com/user-attachments/assets/c0570a73-32f5-430d-af70-7ee67752e54b)
+
+
 I included a sample expo eas config file. EAS is useful for OTA updates (This allows you release a new version of your app instantly). eas is also used for creating builds and submitting to the app store
 
 ## Error handling
 ![Screenshot 2024-12-12 at 15 41 35](https://github.com/user-attachments/assets/7c22cd5f-5240-4d66-9134-4dc72a645f6f)
+
 
 I also included a global error handler. This helps to handle crashes safely and also sending the error to an error monitoring tool like sentry or even slack. This can help when the app goes to production to be notified whenver the app crashes
 
 ## Payment
 i used stripe SDK to integrate the payment options
 Apple pay on IOS and Google pay on android
+
+
 ![IMG_1730](https://github.com/user-attachments/assets/6534e262-56f5-454a-947a-e05d365a9155)
 ![IMG_1731](https://github.com/user-attachments/assets/92f9bcf4-d0c4-4873-9005-8f6588e1cd48)
 
