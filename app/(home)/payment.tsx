@@ -14,6 +14,7 @@ import {
 import { stripeIntent } from '@/api';
 import {scheduleNotification} from '@/utils/notification';
 import { Treatment } from '@/types';
+import ThemedButton from '@/components/ThemedButton';
 
 
 
@@ -210,9 +211,9 @@ const PaymentScreen: React.FC = ({
 
 
           <View style={{alignItems: 'center', top: '2%'}}>
-          <TouchableOpacity onPress={() => {handlePayment()}} style={{ alignSelf: 'center', backgroundColor: 'black', width: '90%', borderRadius: 10, height: 40, justifyContent: 'center' }}>
-                    <Text style={{ color: "white", textAlign: 'center' }}>Secure Checkout</Text>
-                </TouchableOpacity>
+          <ThemedButton text='Secure Checkout'  onPress={() => {handlePayment()}}/>
+
+       
             
           
           <ThemedText style={{top: '15%'}}>or checkout with</ThemedText>

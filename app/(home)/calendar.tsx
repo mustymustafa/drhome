@@ -6,6 +6,7 @@ import { Calendar } from 'react-native-calendars';
 import { formatDateWithSuffix, formatTime } from '@/utils';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { router } from 'expo-router';
+import ThemedButton from '@/components/ThemedButton';
 
 
 
@@ -118,9 +119,7 @@ const CalendarScreen: React.FC = () => {
                 }
 
 
-                {selectedDate && selectedTime && <TouchableOpacity onPress={goToPayment} style={{ top: '10%', alignSelf: 'center', backgroundColor: 'black', width: '90%', borderRadius: 10, height: 40, justifyContent: 'center' }}>
-                    <Text style={{ color: "white", textAlign: 'center' }}>Continue to Payment</Text>
-                </TouchableOpacity>}
+                {selectedDate && selectedTime && <ThemedButton text='Continue to Payment' onPress={goToPayment} spacing={10} />}
             </View>
         </View>
 

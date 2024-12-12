@@ -8,6 +8,7 @@ import { useAppContext } from '@/context/AppContext';
 import { router } from 'expo-router';
 import { registerForPushNotificationsAsync } from '@/utils/notification';
 import { Treatment } from '@/types';
+import ThemedButton from '@/components/ThemedButton';
 
 const HomeScreen = () => {
   const { treatments, booking, fetchTreatments, addBooking } = useAppContext();
@@ -19,6 +20,8 @@ const HomeScreen = () => {
     fetchTreatments();
   }, []);
 
+
+  //remove from booking if selected
   const handleSelection = (item: Treatment) => {
     setSelectedItems((prevItems) => {
       return prevItems.some((selectedItem) => selectedItem.id === item.id)
@@ -35,7 +38,8 @@ const HomeScreen = () => {
 
   const renderTreatmentItem = ({ item }: { item: Treatment }) => {
     const isSelected =
-      selectedItems.some((selectedItem) => selectedItem.id === item.id) 
+      selectedItems.some((selectedItem) => selectedItem.id === item.id) ||
+      booking?.treatments?.some((selectedItem) => selectedItem.id === item.id);
 
     return (
       <TouchableOpacity onPress={() => handleSelection(item)} style={styles.card}>
@@ -71,9 +75,9 @@ style={styles.treatmentList}
         ListFooterComponent={<View style={styles.listFooter}/>}
       />
 
-      <TouchableOpacity onPress={onTreatmentSelected} style={styles.stickyButton}>
-        <ThemedText style={styles.buttonText}>Continue</ThemedText>
-      </TouchableOpacity>
+      <ThemedButton spacing={85} text='Continue' onPress={onTreatmentSelected} sticky   />
+
+
     </ThemedView>
   );
 };
@@ -102,18 +106,7 @@ bottom: 20,
     fontSize: 12,
     marginTop: 5,
   },
-  stickyButton: {
-    top: '85%',
-    position: 'absolute',
-    bottom: 0,
-    alignSelf: 'center',
-    backgroundColor: 'black',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    width: '90%',
-    height: 40
-  },
+
   buttonText: {
     color: 'white',
     textAlign: 'center',
