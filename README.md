@@ -18,7 +18,7 @@ for any questions you can contact me on: mustafaumar70@live.com
       5. jest for unit test
          
 
-1. Install dependencies
+1. Clone repository and Install dependencies
 
    ```bash
    yarn
