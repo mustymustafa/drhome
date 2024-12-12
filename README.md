@@ -1,50 +1,85 @@
-# Welcome to your Expo app 👋
+# Welcome to your DR Home app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
 ## Get started
 
-1. Install dependencies
+## Walktrhough Video
+https://utfs.io/f/3LgkUbTOXVomGVS8wLUPlZq5dKUeWArSHiOX3j4JBw0fcVk8
+
+## Contact
+for any questions you can contact me on: mustafaumar70@live.com
+
+## Pre-requisites
+1. ios or android simulators
+
+   ## Tech stack used
+      1. Expo
+      2. expo-router
+      3. React Context API for state management
+      4. stripe payment
+      5. jest for unit test
+         
+
+1. Clone repository and Install dependencies
 
    ```bash
-   npm install
+   yarn
    ```
 
 2. Start the app
 
    ```bash
-    npx expo start
+    yarn start
+   ```
+3.  ```bash Select s to switch to expo go```
+4. ```bashselect i for ios or a for android ```
+
+5. Run unit test
+     ```bash
+    yarn test
    ```
 
-In the output, you'll find options to open the app in a
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Running on real device
 
-## Get a fresh project
+1. download expo go app from app store or google play store
+2. sign in with my demo account username: musty, password: musty100
+3. connect your device to the same wifi as your laptop or use a usb cable
+4. run the app from you laptop and you will see it appear on your expo go app
+5. tip: make sure your device is in light mode. Dark mode wasn't implemented in the prpject
 
-When you're ready, run:
 
-```bash
-npm run reset-project
-```
+## CI/CD
+![Screenshot 2024-12-12 at 15 39 23](https://github.com/user-attachments/assets/459e0311-9369-4cd7-8abd-ddba47757df3)
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-## Learn more
+i setup a boilerplate yaml file which can be used to automate build process and app store submission
 
-To learn more about developing your project with Expo, look at the following resources:
+## Design system
+   ![Screenshot 2024-12-12 at 15 42 05](https://github.com/user-attachments/assets/1e6268bb-1930-4b49-8f9b-0d975e7796d5)
+   
+   
+   i made use of atomic design system. It follows the structure of an atom. Creating Themed components allows us to reuse components while maintaning the same look and feeel across the app
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## EXPO EAS update
+![Screenshot 2024-12-12 at 15 39 57](https://github.com/user-attachments/assets/c0570a73-32f5-430d-af70-7ee67752e54b)
 
-## Join the community
 
-Join our community of developers creating universal apps.
+I included a sample expo eas config file. EAS is useful for OTA updates (This allows you release a new version of your app instantly). eas is also used for creating builds and submitting to the app store
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Error handling
+![Screenshot 2024-12-12 at 15 41 35](https://github.com/user-attachments/assets/7c22cd5f-5240-4d66-9134-4dc72a645f6f)
+
+
+I also included a global error handler. This helps to handle crashes safely and also sending the error to an error monitoring tool like sentry or even slack. This can help when the app goes to production to be notified whenver the app crashes
+
+## Payment
+i used stripe SDK to integrate the payment options
+Apple pay on IOS and Google pay on android
+
+
+![IMG_1730](https://github.com/user-attachments/assets/6534e262-56f5-454a-947a-e05d365a9155)
+![IMG_1731](https://github.com/user-attachments/assets/92f9bcf4-d0c4-4873-9005-8f6588e1cd48)
+
+
