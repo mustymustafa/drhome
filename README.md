@@ -3,6 +3,8 @@
 
 ## Get started
 
+## Walktrhough Video
+https://uploadthing.com/dashboard/mytradepal/5usdiermiz/files
 
 ## Contact
 for any questions you can contact me on: mustafaumar70@live.com
@@ -29,8 +31,8 @@ for any questions you can contact me on: mustafaumar70@live.com
    ```bash
     yarn start
    ```
-3. Select s to switch to expo go
-4. select i for ios or a for android 
+3.  ```bash Select s to switch to expo go```
+4. ```bashselect i for ios or a for android ```
 
 5. Run unit test
      ```bash
