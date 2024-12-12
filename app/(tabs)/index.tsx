@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, FlatList, TouchableOpacity, View } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/atomic/atoms/ThemedText';
+import { ThemedView } from '@/components/atomic/atoms/ThemedView';
 import { useAppContext } from '@/context/AppContext';
 import { router } from 'expo-router';
 import { registerForPushNotificationsAsync } from '@/utils/notification';
 import { Treatment } from '@/types';
-import ThemedButton from '@/components/ThemedButton';
+import ThemedButton from '@/components/atomic/molecules/ThemedButton';
 
 const HomeScreen = () => {
   const { treatments, booking, fetchTreatments, removeTreatment, addBooking } = useAppContext();
@@ -61,7 +61,7 @@ const HomeScreen = () => {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedView style={{top: '15%', padding: 20}}>
+      <ThemedView style={styles.titleSection}>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="subtitle">Select a treatment</ThemedText>
       </ThemedView>
@@ -76,7 +76,7 @@ style={styles.treatmentList}
         ListFooterComponent={<View style={styles.listFooter}/>}
       />
 
-      <ThemedButton spacing={85} text='Continue' onPress={onTreatmentSelected} sticky   />
+      <ThemedButton spacing={83} text='Continue' onPress={onTreatmentSelected} sticky   />
 
 
     </ThemedView>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
 bottom: 20,
    padding: 10
   },
-  treatmentList: {flex: 1, top: '12%', alignSelf: 'center'},
+  treatmentList: {flex: 1, top: '2%', alignSelf: 'center'},
  
   card: {
     padding: 20,
@@ -116,7 +116,8 @@ bottom: 20,
     margin: 2,
     borderRadius: 50,
   },
-  listFooter: {height: 300, top: 100}
+  listFooter: {height: 300, top: 100},
+  titleSection: {top: '5%', padding: 20}
 });
 
 export default HomeScreen;

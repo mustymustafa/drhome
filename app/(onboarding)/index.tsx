@@ -5,8 +5,8 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import { router } from 'expo-router';
 import { useAppContext } from '@/context/AppContext';
 import { appleleUser, googleUser } from '@/mock/user';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/atomic/atoms/ThemedText';
+import { ThemedView } from '@/components/atomic/atoms/ThemedView';
 
 const LandingPage = () => {
   const { storeUser } = useAppContext();

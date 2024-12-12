@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useAppContext } from '@/context/AppContext';
-import { ThemedText } from '@/components/ThemedText';
+import { ThemedText } from '@/components/atomic/atoms/ThemedText';
 import { Calendar } from 'react-native-calendars';
 import { formatDateWithSuffix, formatTime } from '@/utils';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { router } from 'expo-router';
-import ThemedButton from '@/components/ThemedButton';
+import ThemedButton from '@/components/atomic/molecules/ThemedButton';
 
 
 

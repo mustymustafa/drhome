@@ -11,9 +11,7 @@ export default function HomeLayout() {
         name="calendar"
         options={{
           title: 'Calendar',
-          headerShown: true,
-         headerBackButtonDisplayMode: 'generic',
-         headerBackVisible: true
+      
         }}
       />
       <Stack.Screen

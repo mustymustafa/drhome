@@ -1,19 +1,22 @@
-import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, Text, ActivityIndicator } from "react-native";
 
 interface ThemedButtonProps {
     text: string;
     onPress: () => void;
     spacing?: number;
     sticky?: boolean
+    loading?: boolean
 }
 
 
-const ThemedButton = ({text, onPress, spacing, sticky}:ThemedButtonProps ) => {
+const ThemedButton = ({text, onPress, spacing, sticky, loading}:ThemedButtonProps ) => {
 
    const stickyButton = sticky ? 'stickyButton' : 'button'
     return (
 <TouchableOpacity onPress={onPress} style={[styles.button, styles[stickyButton],  {top: `${spacing ?? 0}%`}]}>
-                    <Text style={styles.text}>{text}</Text>
+                    
+                    {loading ? <ActivityIndicator size="small" /> :  <Text style={styles.text}>{text}</Text>}
+                   
                 </TouchableOpacity>
 
     )

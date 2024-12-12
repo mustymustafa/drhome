@@ -1,24 +1,14 @@
 import { StyleSheet, FlatList, View } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
+import { ThemedText } from '@/components/atomic/atoms/ThemedText';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useAppContext } from '@/context/AppContext';
 import { Booking } from '@/types';
-import { ThemedView } from '@/components/ThemedView';
+import { ThemedView } from '@/components/atomic/atoms/ThemedView';
 
 export default function LoyaltyScreen() {
   const { loyaltyPoints, bookingHistory } = useAppContext();
 
-  // Render header with icon
-  const renderHeader = () => (
-    <ThemedView style={styles.headerContainer}>
-      <IconSymbol
-        size={310}
-        color="#808080"
-        name="chevron.left.forwardslash.chevron.right"
-        style={styles.headerImage}
-      />
-    </ThemedView>
-  );
+
 
   // Render individual booking items
   const renderBookingItem = ({ item }: { item: Booking }) => (
@@ -36,8 +26,7 @@ export default function LoyaltyScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Header Section */}
-      {renderHeader()}
+     
 
       {/* Loyalty Points Section */}
       <ThemedView style={styles.loyaltySection}>

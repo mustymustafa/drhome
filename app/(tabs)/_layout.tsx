@@ -2,11 +2,12 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
 
-import { HapticTab } from '@/components/HapticTab';
+import { HapticTab } from '@/components/ui/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import ThemedHeader from '@/components/atomic/molecules/ThemedHeader';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -29,7 +30,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          header: (props) => <ThemedHeader/>,
+          headerShown: true,
+          title: '',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
@@ -37,6 +40,8 @@ export default function TabLayout() {
         name="loyalty"
         options={{
           title: 'Loyalty',
+          header: (props) => <ThemedHeader/>,
+          headerShown: true,
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
         }}
       />

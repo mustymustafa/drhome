@@ -40,7 +40,7 @@ export default function RootLayout() {
       <Stack>
       <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(home)" options={{ headerShown: false }} />
+        <Stack.Screen name="(home)" options={{ headerShown: true, headerBackTitle: 'back', headerTitle: '' }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
