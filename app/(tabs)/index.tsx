@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, FlatList, TouchableOpacity, View } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useAppContext } from '@/context/AppContext';
@@ -11,7 +10,7 @@ import { Treatment } from '@/types';
 import ThemedButton from '@/components/ThemedButton';
 
 const HomeScreen = () => {
-  const { treatments, booking, fetchTreatments, addBooking } = useAppContext();
+  const { treatments, booking, fetchTreatments, removeTreatment, addBooking } = useAppContext();
   const [selectedItems, setSelectedItems] = useState<Treatment[]>([]);
   const now = new Date().getTime();
 
@@ -28,6 +27,8 @@ const HomeScreen = () => {
         ? prevItems.filter((selectedItem) => selectedItem.id !== item.id)
         : [...prevItems, item];
     });
+    //remove the treatment from the booking state if it's currently selected
+    removeTreatment(item.id)
   };
 
   const onTreatmentSelected = () => {

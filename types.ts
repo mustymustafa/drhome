@@ -27,6 +27,7 @@ export interface Treatment {
     bookingHistory: Booking[] | null;
     user: UserProps | undefined;
     storeUser: (user: UserProps) => void
+    removeTreatment: (id: string) => void
   }
 
   export interface UserProps {

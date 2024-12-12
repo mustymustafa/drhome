@@ -23,6 +23,7 @@ export const mockTreatments = [
       },
     ],
   };
+  
 export const mockContext = {
     treatments: mockTreatments,
     booking: { treatments: [] },

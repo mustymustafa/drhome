@@ -45,9 +45,15 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       [...prevBooking, newBooking] )
 
   }
+
+  const removeTreatment = (id: string) => {
+  const newTreatments =  booking?.treatments?.filter((treatment) => treatment.id != id )
+  addBooking({treatments: newTreatments})
+
+  }
       
       return (
-    <AppContext.Provider value={{ treatments, loyaltyPoints, addPoints, fetchTreatments, addBooking, booking, bookingHistory, resetBooking, addBookingToHistory, user, storeUser}}>
+    <AppContext.Provider value={{ treatments, loyaltyPoints, addPoints, fetchTreatments, addBooking, booking, bookingHistory, resetBooking, addBookingToHistory, user, storeUser, removeTreatment}}>
       {children}
     </AppContext.Provider>
   );
