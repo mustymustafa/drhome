@@ -31,16 +31,16 @@ for any questions you can contact me on: mustafaumar70@live.com
    ```bash
     yarn start
    ```
-3.  ```bash
+     ```bash
     Select s to switch to expo go
     ```
     ```bash
     select i for ios or a for android
     ```
 
-   4.  Run unit test
+3.   Run unit test
      ```bash
-    yarn test
+       yarn test
       ```
 
      ## Payment
