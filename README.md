@@ -41,7 +41,7 @@ for any questions you can contact me on: mustafaumar70@live.com
    4.  Run unit test
      ```bash
     yarn test
-   ```
+      ```
 
      ## Payment
 i used stripe SDK to integrate the payment options
