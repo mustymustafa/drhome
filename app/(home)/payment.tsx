@@ -27,8 +27,6 @@ const PaymentScreen: React.FC = () => {
 
   useEffect(() => {
     addBooking({ total });
-    //reset points
-    addPoints(0)
   }, [total]);
 
   const initializePaymentSheet = async (resp: any) => {

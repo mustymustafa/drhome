@@ -18,7 +18,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const addPoints = (points: number) => {
-    setLoyaltyPoints((prev) => prev + points);
+    setLoyaltyPoints(points);
   };
 
   //It is partial so that it allows us pass only the fields we want to update
